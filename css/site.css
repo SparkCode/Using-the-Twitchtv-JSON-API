@@ -1,0 +1,56 @@
+.container-fluid {
+    max-width: 700px;
+    margin: 40px auto 40px auto;
+}
+
+.nav-pills {
+    background-color: #fafbfc;
+    font-size: 14px;
+    border-radius: 2px 2px 0 0;
+    padding-left:  10px !important;
+    padding-right:  10px !important;
+    border: solid 1px #e7e8ec;
+}
+
+.nav-pills a {
+    color: #656565;
+    padding: 18px 6px !important;
+    margin: auto 4px;
+    border-radius: 0px !important;
+}
+
+.nav-pills .active a{
+    background-color: transparent !important;
+    color: #000 !important;
+    border-bottom: solid 2px #6387ac;
+}
+
+.nav-pills .active a:hover {
+    border-bottom: solid 2px #6387ac;
+}
+
+.nav-pills a:hover {
+    border-bottom: solid 2px #cad2db;
+    background-color: transparent !important;
+}
+
+.tab-content {
+    padding-left:  10px !important;
+    padding-right:  10px !important;
+    margin: 10px auto 10px auto;
+}
+
+.media{
+    border-bottom: solid 1px #e7e8ec;
+
+}
+
+.media-body h4 {
+    color: #2a5885;
+}
+
+.media-body p {
+    color: #656565;
+}
+
+
