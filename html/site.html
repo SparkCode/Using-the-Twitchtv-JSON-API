@@ -7,112 +7,37 @@
     <link rel="stylesheet" href="../css/site.css">
     <script src="https://code.jquery.com/jquery-3.2.0.js"></script>
     <script src="../js/bootstrap.js"></script>
+    <script src="../js/site.js"></script>
 </head>
 <body>
 <div class="container-fluid">
 
     <ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active"><a href="#home" data-toggle="pill">All twitchers<span>10</span></a></li>
-        <li role="presentation"><a href="#profile" data-toggle="pill">Online<span>5</span></a></li>
+        <li role="presentation" class="active"><a href="#all" data-toggle="pill">All twitchers<span id="all-user-count">0</span></a></li>
+        <li role="presentation"><a href="#online" data-toggle="pill">Online<span id="online-user-count">0</span></a></li>
     </ul>
 
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="home">
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="#" target="_blank"><h4 class="media-heading">Elizaveta Romanova</h4></a>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-                </div>
-            </div>
-
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Elizaveta Romanova</h4>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-
-                </div>
-            </div>
-
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Elizaveta Romanova</h4>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-
-                </div>
-            </div>
-
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Elizaveta Romanova</h4>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-
-                </div>
-            </div>
-
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Elizaveta Romanova</h4>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-
-                </div>
-            </div>
-
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Elizaveta Romanova</h4>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-
-                </div>
-            </div>
-
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="https://pp.userapi.com/c410926/v410926005/8b14/-xw4WO2ig_g.jpg" alt="..">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">Elizaveta Romanova</h4>
-                    <p>ИжГТУ им. М. Т. Калашникова (бывш. ИМИ)</p>
-
-                </div>
-            </div>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="profile">2</div>
+        <div role="tabpanel" class="tab-pane fade in active" id="all"></div>
+        <div role="tabpanel" class="tab-pane fade" id="online"></div>
     </div>
 </div>
 
 
+<div hidden>
+    <div class="media">
+        <div class="media-left">
+            <a class="url" href="#">
+                <img class="profile-picture" src="" alt="profile picture">
+            </a>
+        </div>
+        <div class="media-body">
+            <a class="url" href="#" target="_blank"><h4 class="media-heading user-name"></h4></a>
+            <p class="online" hidden>Online</p>
+            <p class="status"></p>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
