@@ -4,7 +4,9 @@ $(document).ready(getData);
 
 function getData() {
     twichers.map(function (name) {
-        getTwitcherData(name)
+        var twitcherData =  getTwitcherData(name);
+
+        twitcherData
             .then((data) => ({
                     profilePicture: data["logo"],
                     status: data["status"],
@@ -13,8 +15,9 @@ function getData() {
                     profilePicture: "https://www.twitch.tv/images/xarth/dead_glitch.png",
                     status: "A streamer has closed their Twitch account (or the account never existed)",
                     url: "#"}))
-            .then((result) => updatePage(result, name))
-            .then(() => getTwitcherStreamData(name))
+            .then((result) => updatePage(result, name));
+
+        twitcherData.then(() => getTwitcherStreamData(name))
             .then((result) => updateStreamPageData(result, name))
             .catch((error) => console.log(error));
     })
@@ -48,12 +51,9 @@ function getTwitcherData(name) {
     return new Promise((correct, reject) => {
         $.ajax({
             url:`https://wind-bow.gomix.me/twitch-api/channels/${name}`,
-            success: function (data) {
-                if (data.error)
-                    reject(data);
-                else
-                    correct(data);
-            },
+            success: (data) => !data.error
+                ? correct(data)
+                : reject({data: data, name, method: getTwitcherData.name}),
             dataType: "jsonp"
         })
     });
@@ -63,12 +63,9 @@ function getTwitcherStreamData(name) {
     return new Promise((correct, reject) => {
         $.ajax({
             url: `https://wind-bow.gomix.me/twitch-api/streams/${name}`,
-            success: function (data) {
-                if (data["stream"])
-                    correct(data, name);
-                else
-                    reject();
-            },
+            success: (data) => data.stream
+                ? correct(data)
+                : reject({data: data, name, method: getTwitcherStreamData.name}),
             dataType: "jsonp"
         })
     });
