@@ -4,8 +4,9 @@ $(document).ready(getData);
 
 function getData() {
     twichers.map(name => {
-        co(updatePage(name)).catch(console.log);
-        co(updateStreamPageData(name)).catch(console.log);
+        co(updatePage(name))
+            .then(co(updateStreamPageData(name)))
+            .catch(console.log);
     });
 }
 
