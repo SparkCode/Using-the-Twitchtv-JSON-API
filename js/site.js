@@ -22,18 +22,9 @@ function* getData() {
 }
 
 function* updatePage(userName) {
-    let data = yield getTwitcherData(userName)
-        .then((data) => ({
-            profilePicture: data["logo"],
-            status: data["status"],
-            url: data["url"]}),
-        () => ({
-            profilePicture: "https://www.twitch.tv/images/xarth/dead_glitch.png",
-            status: "A streamer has closed their Twitch account (or the account never existed)",
-            url: "#"}));
-
-    let element = $("div[hidden] .media").clone().first();
-    element.find(".profile-picture").attr("src", data.profilePicture);
+    var data = yield* getTwitcherData(userName);
+    var element = $("div[hidden] .media").clone().first();
+    element.find(".profile-picture").attr("src", data.logo);
     element.find(".user-name").html(userName);
     element.find(".status").html(data.status);
     element.find(".url").attr("href", data.url);
@@ -43,8 +34,7 @@ function* updatePage(userName) {
 }
 
 function* updateStreamPageData(userName) {
-    let data = yield getTwitcherStreamData(userName);
-
+    var data = yield* getTwitcherStreamData(userName);
     var status = data["stream"]["status"];
     var element = $("#" + userName);
     element.find(".status").html(status);
@@ -55,28 +45,20 @@ function* updateStreamPageData(userName) {
     $("#online").append(element.clone());
 }
 
-function getTwitcherData(name) {
-    return new Promise((correct, reject) => {
-        $.ajax({
-            url:`https://wind-bow.gomix.me/twitch-api/channels/${name}`,
-            success: (data) => !data.error
-                ? correct(data)
-                : reject({data: data, name, method: getTwitcherData.name}),
-            dataType: "jsonp"
-        })
-    });
+function* getTwitcherData(name) {
+    var dataFetch = yield fetch(`https://wind-bow.glitch.me/twitch-api/channels/${name}`);
+    var json = yield dataFetch.json();
+    return !json.error ? json
+        : {logo: "https://www.twitch.tv/images/xarth/dead_glitch.png",
+            status: "A streamer has closed their Twitch account (or the account never existed)",
+            url: "#"};
 }
 
-function getTwitcherStreamData(name) {
-    return new Promise((correct, reject) => {
-        $.ajax({
-            url: `https://wind-bow.gomix.me/twitch-api/streams/${name}`,
-            success: (data) => data.stream
-                ? correct(data)
-                : reject({data: data, name, method: getTwitcherStreamData.name}),
-            dataType: "jsonp"
-        })
-    });
+function* getTwitcherStreamData(name) {
+    var dataFetch = yield fetch(`https://wind-bow.glitch.me/twitch-api/streams/${name}`);
+    var json = yield dataFetch.json();
+    if (!json["stream"]) throw new Error(`User ${name} don't have a stream right now`);
+    return json;
 }
 
 
