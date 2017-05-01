@@ -1,42 +1,50 @@
 var twichers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas", "agravein", "tellMeWHY?"];
 
-$(document).ready(getData);
+$(document)
+    .ready(co(getData)
+        .catch(console.log));
 
-function getData() {
-    twichers.map(function (name) {
-        var twitcherData =  getTwitcherData(name);
+function* getData() {
+    for (let name of twichers)
+    {
+        yield* updatePage(name);
+    }
 
-        twitcherData
-            .then((data) => ({
-                    profilePicture: data["logo"],
-                    status: data["status"],
-                    url: data["url"]}),
-                () => ({
-                    profilePicture: "https://www.twitch.tv/images/xarth/dead_glitch.png",
-                    status: "A streamer has closed their Twitch account (or the account never existed)",
-                    url: "#"}))
-            .then((result) => updatePage(result, name));
-
-        twitcherData.then(() => getTwitcherStreamData(name))
-            .then((result) => updateStreamPageData(result, name))
-            .catch((error) => console.log(error));
-    })
+    for (let name of twichers)
+    {
+        try {
+            yield* updateStreamPageData(name)
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }
 }
 
-function updatePage(data, userName) {
+function* updatePage(userName) {
+    let data = yield getTwitcherData(userName)
+        .then((data) => ({
+            profilePicture: data["logo"],
+            status: data["status"],
+            url: data["url"]}),
+        () => ({
+            profilePicture: "https://www.twitch.tv/images/xarth/dead_glitch.png",
+            status: "A streamer has closed their Twitch account (or the account never existed)",
+            url: "#"}));
+
     let element = $("div[hidden] .media").clone().first();
     element.find(".profile-picture").attr("src", data.profilePicture);
     element.find(".user-name").html(userName);
     element.find(".status").html(data.status);
     element.find(".url").attr("href", data.url);
     element.attr("id", userName);
-
     $("#all").append(element);
-
     $("#all-user-count").html(twichers.length);
 }
 
-function updateStreamPageData(data, userName) {
+function* updateStreamPageData(userName) {
+    let data = yield getTwitcherStreamData(userName);
+
     var status = data["stream"]["status"];
     var element = $("#" + userName);
     element.find(".status").html(status);
